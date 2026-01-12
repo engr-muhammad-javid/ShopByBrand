@@ -1,0 +1,41 @@
+<?php
+/**
+ * @var $block \Zeta\ShopByBrand\Block\Product\Brand
+ * @var $viewModel \Zeta\ShopByBrand\ViewModel\Brand
+ * @var $hyva \Hyva\Theme\Model\ViewModelRegistry
+ */
+
+if (!$block->isEnabled()) {
+    return;
+}
+
+$brand = $block->getBrand();
+if (!$brand) {
+    return;
+}
+
+$width = $block->getLogoWidth();
+$height = $block->getLogoHeight();
+?>
+
+<div class="product-brand-info flex items-center gap-4 p-4 bg-gray-50 rounded-lg mb-6">
+    <div class="text-sm font-semibold text-gray-700">
+        <?= $escaper->escapeHtml(__('Brand:')) ?>
+    </div>
+    <div class="flex-1">
+        <a href="<?= $escaper->escapeUrl($block->getBrandUrl($brand)) ?>"
+           class="inline-flex items-center gap-3 transition-opacity hover:opacity-70"
+           title="<?= $escaper->escapeHtmlAttr(__('View all products by %1', $brand->getName())) ?>">
+            <?php if ($logoUrl = $block->getBrandLogoUrl($brand)): ?>
+                <img src="<?= $escaper->escapeUrl($logoUrl) ?>"
+                     alt="<?= $escaper->escapeHtmlAttr($brand->getName()) ?>"
+                     <?php if ($width): ?>style="max-width: <?= $escaper->escapeHtmlAttr($width) ?>px;"<?php endif; ?>
+                     <?php if ($height): ?>style="max-height: <?= $escaper->escapeHtmlAttr($height) ?>px;"<?php endif; ?>
+                     class="object-contain" />
+            <?php endif; ?>
+            <span class="font-semibold text-gray-900 text-lg">
+                <?= $escaper->escapeHtml($brand->getName()) ?>
+            </span>
+        </a>
+    </div>
+</div>

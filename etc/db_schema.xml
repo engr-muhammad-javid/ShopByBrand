@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="zeta_brand" resource="default" engine="innodb" comment="Zeta Brand Table">
+        <column xsi:type="int" name="id" unsigned="true" nullable="false" identity="true" comment="Brand ID"/>
+        <column xsi:type="varchar" name="name" nullable="false" length="255" comment="Brand Name"/>
+        <column xsi:type="varchar" name="url_key" nullable="false" length="255" comment="URL Key"/>
+        <column xsi:type="varchar" name="image" nullable="true" length="255" comment="Brand Image"/>
+        <column xsi:type="varchar" name="logo" nullable="true" length="255" comment="Brand Logo"/>
+        <column xsi:type="text" name="short_description" nullable="true" comment="Short Description"/>
+        <column xsi:type="text" name="description" nullable="true" comment="Description"/>
+        <column xsi:type="varchar" name="meta_title" nullable="true" length="255" comment="Meta Title"/>
+        <column xsi:type="text" name="meta_description" nullable="true" comment="Meta Description"/>
+        <column xsi:type="text" name="meta_keywords" nullable="true" comment="Meta Keywords"/>
+        <column xsi:type="int" name="option_id" unsigned="true" nullable="false" comment="Attribute Option ID"/>
+        <column xsi:type="smallint" name="is_active" unsigned="true" nullable="false" default="1" comment="Is Active"/>
+        <column xsi:type="int" name="position" unsigned="true" nullable="false" default="0" comment="Position"/>
+        <column xsi:type="timestamp" name="created_at" nullable="false" default="CURRENT_TIMESTAMP" comment="Created At"/>
+        <column xsi:type="timestamp" name="updated_at" nullable="false" default="CURRENT_TIMESTAMP" on_update="true" comment="Updated At"/>
+
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="id"/>
+        </constraint>
+        <constraint xsi:type="unique" referenceId="ZETA_BRAND_URL_KEY">
+            <column name="url_key"/>
+        </constraint>
+        <constraint xsi:type="unique" referenceId="ZETA_BRAND_OPTION_ID">
+            <column name="option_id"/>
+        </constraint>
+
+        <index referenceId="ZETA_BRAND_NAME" indexType="btree">
+            <column name="name"/>
+        </index>
+        <index referenceId="ZETA_BRAND_IS_ACTIVE" indexType="btree">
+            <column name="is_active"/>
+        </index>
+        <index referenceId="ZETA_BRAND_POSITION" indexType="btree">
+            <column name="position"/>
+        </index>
+    </table>
+</schema>

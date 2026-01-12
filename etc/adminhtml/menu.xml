@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Zeta_ShopByBrand::menu"
+             title="Shop By Brand"
+             module="Zeta_ShopByBrand"
+             sortOrder="20"
+             parent="Zeta_Core::root"
+             resource="Zeta_ShopByBrand::main"/>
+
+        <add id="Zeta_ShopByBrand::brands"
+             title="Manage Brands"
+             module="Zeta_ShopByBrand"
+             sortOrder="10"
+             parent="Zeta_ShopByBrand::menu"
+             action="zeta_shopbybrand/brand/index"
+             resource="Zeta_ShopByBrand::brand"/>
+
+        <add id="Zeta_ShopByBrand::config"
+             title="Configuration"
+             module="Zeta_ShopByBrand"
+             sortOrder="20"
+             parent="Zeta_ShopByBrand::menu"
+             action="adminhtml/system_config/edit/section/zeta_shopbybrand"
+             resource="Zeta_ShopByBrand::config"/>
+    </menu>
+</config>

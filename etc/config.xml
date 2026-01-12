@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <zeta_shopbybrand>
+            <general>
+                <enabled>1</enabled>
+                <brand_attribute></brand_attribute>
+            </general>
+            <listing_page>
+                <show_brand>1</show_brand>
+                <logo_width>100</logo_width>
+                <logo_height>100</logo_height>
+            </listing_page>
+            <product_page>
+                <show_brand>1</show_brand>
+                <logo_width>150</logo_width>
+                <logo_height>150</logo_height>
+            </product_page>
+            <default_logo>
+                <image></image>
+            </default_logo>
+        </zeta_shopbybrand>
+    </default>
+</config>

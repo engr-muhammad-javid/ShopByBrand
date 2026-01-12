@@ -1,0 +1,40 @@
+<?php
+/**
+ * @var $block \Magento\Catalog\Block\Product\ListProduct
+ * @var $viewModel \Zeta\ShopByBrand\ViewModel\Brand
+ * @var $_product \Magento\Catalog\Model\Product
+ * @var $hyva \Hyva\Theme\Model\ViewModelRegistry
+ */
+
+$viewModel = $block->getData('view_model');
+if (!$viewModel || !$viewModel->isEnabled() || !$viewModel->isShowBrandOnListing()) {
+    return;
+}
+
+$brand = $viewModel->getBrandByProduct($_product);
+if (!$brand) {
+    return;
+}
+
+$width = $viewModel->getListingLogoWidth();
+$height = $viewModel->getListingLogoHeight();
+?>
+
+<div class="product-item-brand mt-3 flex justify-center">
+    <a href="<?= $escaper->escapeUrl($viewModel->getBrandUrl($brand)) ?>"
+       class="inline-flex items-center justify-center gap-2 transition-opacity hover:opacity-70"
+       title="<?= $escaper->escapeHtmlAttr(__('View all products by %1', $brand->getName())) ?>">
+        <?php if ($logoUrl = $viewModel->getBrandLogoUrl($brand)): ?>
+            <img src="<?= $escaper->escapeUrl($logoUrl) ?>"
+                 alt="<?= $escaper->escapeHtmlAttr($brand->getName()) ?>"
+                 <?php if ($width): ?>style="max-width: <?= $escaper->escapeHtmlAttr($width) ?>px;"<?php endif; ?>
+                 <?php if ($height): ?>style="max-height: <?= $escaper->escapeHtmlAttr($height) ?>px;"<?php endif; ?>
+                 loading="lazy"
+                 class="object-contain" />
+        <?php else: ?>
+            <span class="text-sm text-gray-600 font-medium">
+                <?= $escaper->escapeHtml($brand->getName()) ?>
+            </span>
+        <?php endif; ?>
+    </a>
+</div>

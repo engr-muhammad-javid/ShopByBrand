@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+
+    <!-- Grid DataProvider Configuration -->
+    <type name="Zeta\ShopByBrand\Ui\DataProvider\Brand\ListingDataProvider">
+        <arguments>
+            <argument name="name" xsi:type="string">zeta_shopbybrand_brand_listing_data_source</argument>
+            <argument name="primaryFieldName" xsi:type="string">id</argument>
+            <argument name="requestFieldName" xsi:type="string">id</argument>
+        </arguments>
+    </type>
+    
+    <!-- Form DataProvider -->
+    <type name="Zeta\ShopByBrand\Model\Brand\DataProvider">
+        <arguments>
+            <argument name="name" xsi:type="string">brand_form_data_source</argument>
+            <argument name="primaryFieldName" xsi:type="string">id</argument>
+            <argument name="requestFieldName" xsi:type="string">id</argument>
+        </arguments>
+    </type>
+
+    <!-- Image Uploaders -->
+    <type name="Zeta\ShopByBrand\Controller\Adminhtml\Brand\Upload">
+        <arguments>
+            <argument name="imageUploader" xsi:type="object">Zeta\ShopByBrand\BrandImageUploader</argument>
+        </arguments>
+    </type>
+
+    <type name="Zeta\ShopByBrand\Controller\Adminhtml\Brand\UploadLogo">
+        <arguments>
+            <argument name="imageUploader" xsi:type="object">Zeta\ShopByBrand\BrandLogoUploader</argument>
+        </arguments>
+    </type>
+</config>

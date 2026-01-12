@@ -1,0 +1,112 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="zeta_shopbybrand" translate="label" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Shop By Brand</label>
+            <tab>zeta</tab>
+            <resource>Zeta_ShopByBrand::shopbybrand_config</resource>
+
+            <group id="general" translate="label" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>General Settings</label>
+
+                <field id="enabled" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enable Module</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>Enable/Disable Shop By Brand module</comment>
+                </field>
+
+                <field id="brand_attribute" translate="label comment" type="select" sortOrder="20" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Brand Attribute</label>
+                    <source_model>Zeta\ShopByBrand\Model\Config\Source\Attribute</source_model>
+                    <comment>Select product attribute to use for brands</comment>
+                    <backend_model>Zeta\ShopByBrand\Model\Config\Backend\BrandAttribute</backend_model>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                </field>
+            </group>
+
+            <group id="listing_page" translate="label" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Listing Page Settings</label>
+
+                <field id="show_brand" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Show Brand on Listing Page</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="*/general/enabled">1</field>
+                    </depends>
+                </field>
+
+                <field id="logo_width" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Logo Width (px)</label>
+                    <validate>validate-number validate-zero-or-greater</validate>
+                    <depends>
+                        <field id="show_brand">1</field>
+                    </depends>
+                </field>
+
+                <field id="logo_height" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Logo Height (px)</label>
+                    <validate>validate-number validate-zero-or-greater</validate>
+                    <depends>
+                        <field id="show_brand">1</field>
+                    </depends>
+                </field>
+            </group>
+
+            <group id="product_page" translate="label" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Product Page Settings</label>
+
+                <field id="show_brand" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Show Brand on Product Page</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="*/general/enabled">1</field>
+                    </depends>
+                </field>
+
+                <field id="logo_width" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Logo Width (px)</label>
+                    <validate>validate-number validate-zero-or-greater</validate>
+                    <depends>
+                        <field id="show_brand">1</field>
+                    </depends>
+                </field>
+
+                <field id="logo_height" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Logo Height (px)</label>
+                    <validate>validate-number validate-zero-or-greater</validate>
+                    <depends>
+                        <field id="show_brand">1</field>
+                    </depends>
+                </field>
+            </group>
+
+            <group id="default_logo" translate="label" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Default Logo Settings</label>
+
+                <field id="image" translate="label" type="image" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Default Brand Logo</label>
+                    <backend_model>Magento\Config\Model\Config\Backend\Image</backend_model>
+                    <upload_dir config="system/filesystem/media" scope_info="1">zeta/brand/default</upload_dir>
+                    <base_url type="media" scope_info="1">zeta/brand/default</base_url>
+                    <comment>Used when brand has no logo</comment>
+                </field>
+            </group>
+
+            <group id="default_banner" translate="label" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Default Banner Settings</label>
+
+                <field id="image" translate="label" type="image" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Default Brand Banner</label>
+                    <backend_model>Magento\Config\Model\Config\Backend\Image</backend_model>
+                    <upload_dir config="system/filesystem/media" scope_info="1">zeta/brand/default</upload_dir>
+                    <base_url type="media" scope_info="1">zeta/brand/default</base_url>
+                    <comment>Used when brand has no banner</comment>
+                </field>
+            </group>
+
+        </section>
+    </system>
+</config>

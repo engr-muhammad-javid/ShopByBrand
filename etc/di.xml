@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    
+    <!-- Repository -->
+    <preference for="Zeta\ShopByBrand\Api\BrandRepositoryInterface" 
+                type="Zeta\ShopByBrand\Model\BrandRepository"/>
+    <preference for="Zeta\ShopByBrand\Api\Data\BrandInterface" 
+                type="Zeta\ShopByBrand\Model\Brand"/>
+    <preference for="Zeta\ShopByBrand\Api\Data\BrandSearchResultsInterface" 
+                type="Magento\Framework\Api\SearchResults"/>
+    
+    <!-- Virtual Types for Image Upload -->
+    <virtualType name="Zeta\ShopByBrand\BrandImageUploader" type="Magento\Catalog\Model\ImageUploader">
+        <arguments>
+            <argument name="baseTmpPath" xsi:type="string">zeta/brand/tmp/image</argument>
+            <argument name="basePath" xsi:type="string">zeta/brand/image</argument>
+            <argument name="allowedExtensions" xsi:type="array">
+                <item name="jpg" xsi:type="string">jpg</item>
+                <item name="jpeg" xsi:type="string">jpeg</item>
+                <item name="gif" xsi:type="string">gif</item>
+                <item name="png" xsi:type="string">png</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    
+    <virtualType name="Zeta\ShopByBrand\BrandLogoUploader" type="Magento\Catalog\Model\ImageUploader">
+        <arguments>
+            <argument name="baseTmpPath" xsi:type="string">zeta/brand/tmp/logo</argument>
+            <argument name="basePath" xsi:type="string">zeta/brand/logo</argument>
+            <argument name="allowedExtensions" xsi:type="array">
+                <item name="jpg" xsi:type="string">jpg</item>
+                <item name="jpeg" xsi:type="string">jpeg</item>
+                <item name="gif" xsi:type="string">gif</item>
+                <item name="png" xsi:type="string">png</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <type name="Magento\Eav\Model\Entity\Attribute">
+        <plugin
+            name="zeta_shopbybrand_attribute_after_save"
+            type="Zeta\ShopByBrand\Plugin\Model\AttributePlugin"
+            sortOrder="10"/>
+    </type>
+
+</config>

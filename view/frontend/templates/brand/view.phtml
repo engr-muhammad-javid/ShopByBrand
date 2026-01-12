@@ -1,0 +1,107 @@
+<?php
+/**
+ * @var $block \Zeta\ShopByBrand\Block\Brand\View
+ * @var $viewModel \Zeta\ShopByBrand\ViewModel\BrandList
+ */
+
+$viewModel = $block->getData('view_model');
+$brand = $viewModel->getCurrentBrand();
+
+if (!$brand) {
+    echo '<p>Brand not found</p>';
+    return;
+}
+
+$_productCollection = $block->getLoadedProductCollection();
+?>
+
+<div class="brand-view-container">
+    <!-- Brand Header -->
+    <div class="brand-header mb-8">
+        <?php if ($logoUrl = $viewModel->getBrandLogoUrl($brand)): ?>
+            <img src="<?= $block->escapeUrl($logoUrl) ?>" 
+                 alt="<?= $block->escapeHtmlAttr($brand->getName()) ?>" 
+                 class="brand-logo mb-4" 
+                 style="max-width: 200px;"/>
+        <?php endif; ?>
+        
+        <?php if ($brand->getShortDescription()): ?>
+            <div class="brand-description mb-4">
+                <?= /* @noEscape */ $brand->getShortDescription() ?>
+            </div>
+        <?php endif; ?>
+    </div>
+
+    <!-- Toolbar -->
+    <div class="toolbar toolbar-products mb-6">
+        <?= $block->getToolbarHtml() ?>
+    </div>
+
+    <!-- Products -->
+    <?php if ($_productCollection && $_productCollection->getSize() > 0): ?>
+        <div class="products wrapper grid products-grid">
+            <ol class="products list items product-items grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                <?php foreach ($_productCollection as $_product): ?>
+                    <li class="item product product-item border p-4 rounded">
+                        <div class="product-item-info">
+                            <!-- Product Image -->
+                            <a href="<?= $block->escapeUrl($_product->getProductUrl()) ?>" 
+                               class="product photo product-item-photo block mb-3">
+                                <?php
+                                $productImage = $block->getImage($_product, 'category_page_grid');
+                                $imageUrl = $productImage->getImageUrl();
+                                ?>
+                                <img src="<?= $block->escapeUrl($imageUrl) ?>" 
+                                     alt="<?= $block->escapeHtmlAttr($_product->getName()) ?>"
+                                     class="product-image-photo w-full"/>
+                            </a>
+
+                            <!-- Product Name -->
+                            <strong class="product name product-item-name mb-2 block">
+                                <a href="<?= $block->escapeUrl($_product->getProductUrl()) ?>"
+                                   class="product-item-link font-semibold">
+                                    <?= $block->escapeHtml($_product->getName()) ?>
+                                </a>
+                            </strong>
+
+                            <!-- Price -->
+                            <div class="price-box price-final_price mb-3">
+                                <?= /* @noEscape */ $block->getProductPrice($_product) ?>
+                            </div>
+
+                            <!-- Actions -->
+                            <div class="product-item-inner">
+                                <div class="product actions product-item-actions">
+                                    <div class="actions-primary">
+                                        <form action="<?= $block->escapeUrl($block->getAddToCartUrl($_product)) ?>" 
+                                              method="post">
+                                            <input type="hidden" 
+                                                   name="product" 
+                                                   value="<?= (int)$_product->getEntityId() ?>"/>
+                                            <input type="hidden" 
+                                                   name="form_key" 
+                                                   value="<?= $block->escapeHtmlAttr($block->getFormKey()) ?>"/>
+                                            <button type="submit" 
+                                                    class="action tocart primary btn btn-primary w-full">
+                                                <span>Add to Cart</span>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                <?php endforeach; ?>
+            </ol>
+        </div>
+
+        <!-- Bottom Toolbar -->
+        <div class="toolbar toolbar-products mt-6">
+            <?= $block->getToolbarHtml() ?>
+        </div>
+    <?php else: ?>
+        <div class="message info empty bg-yellow-50 border border-yellow-200 rounded-lg p-6">
+            <p><?= $block->escapeHtml(__('No products found for this brand.')) ?></p>
+        </div>
+    <?php endif; ?>
+</div>

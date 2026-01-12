@@ -1,0 +1,54 @@
+<?php
+/**
+ * @var $block \Zeta\ShopByBrand\Block\Brand\ListBrand
+ * @var $viewModel \Zeta\ShopByBrand\ViewModel\BrandList
+ * @var $hyva \Hyva\Theme\Model\ViewModelRegistry
+ */
+$viewModel = $block->getData('view_model');
+$brands = $viewModel->getBrandsCollection();
+?>
+
+<div class="container mx-auto px-0 py-8">
+    <!-- <div class="mb-8">
+        <h1 class="text-3xl font-bold text-gray-900">
+            <?= $escaper->escapeHtml(__('Brands')) ?>
+        </h1>
+    </div> -->
+
+    <?php if ($brands && $brands->getSize()): ?>
+        <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-6 gap-4">
+            <?php foreach ($brands as $brand): ?>
+                <div class="group">
+                    <a href="<?= $escaper->escapeUrl($viewModel->getBrandUrl($brand)) ?>"
+                       class="block bg-white border border-gray-200 rounded-lg p-6
+                              transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
+                        <?php if ($logoUrl = $viewModel->getBrandLogoUrl($brand)): ?>
+                            <div class="flex items-center justify-center h-32 mb-4">
+                                <img src="<?= $escaper->escapeUrl($logoUrl) ?>"
+                                     alt="<?= $escaper->escapeHtmlAttr($brand->getName()) ?>"
+                                     class="max-w-full max-h-full object-contain"
+                                     loading="lazy" />
+                            </div>
+                        <?php endif; ?>
+
+                        <div class="text-center">
+                            <h3 class="text-lg font-semibold text-gray-900 mb-2 group-hover:text-primary">
+                                <?= $escaper->escapeHtml($brand->getName()) ?>
+                            </h3>
+
+                            <?php if ($brand->getShortDescription()): ?>
+                                <div class="text-sm text-gray-600 line-clamp-2">
+                                    <?= /* @noEscape */ $brand->getShortDescription() ?>
+                                </div>
+                            <?php endif; ?>
+                        </div>
+                    </a>
+                </div>
+            <?php endforeach; ?>
+        </div>
+    <?php else: ?>
+        <div class="bg-blue-50 border border-blue-200 rounded-lg p-6 text-center">
+            <p class="text-blue-800"><?= $escaper->escapeHtml(__('No brands available.')) ?></p>
+        </div>
+    <?php endif; ?>
+</div>

@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">zeta_shopbybrand_brand_form.brand_form_data_source</item>
+        </item>
+        <item name="label" xsi:type="string" translate="true">Brand Information</item>
+        <item name="template" xsi:type="string">templates/form/collapsible</item>
+    </argument>
+
+    <settings>
+        <buttons>
+            <button name="back" class="Zeta\ShopByBrand\Block\Adminhtml\Brand\Edit\BackButton"/>
+            <button name="delete" class="Zeta\ShopByBrand\Block\Adminhtml\Brand\Edit\DeleteButton"/>
+            <button name="save" class="Zeta\ShopByBrand\Block\Adminhtml\Brand\Edit\SaveButton"/>
+            <button name="save_and_continue" class="Zeta\ShopByBrand\Block\Adminhtml\Brand\Edit\SaveAndContinueButton"/>
+        </buttons>
+        <namespace>zeta_shopbybrand_brand_form</namespace>
+        <dataScope>data</dataScope>
+        <deps>
+            <dep>zeta_shopbybrand_brand_form.brand_form_data_source</dep>
+        </deps>
+    </settings>
+
+    <dataSource name="brand_form_data_source">
+        <argument name="data" xsi:type="array">
+            <item name="js_config" xsi:type="array">
+                <item name="component" xsi:type="string">Magento_Ui/js/form/provider</item>
+            </item>
+        </argument>
+        <settings>
+            <submitUrl path="zeta_shopbybrand/brand/save"/>
+        </settings>
+        <dataProvider class="Zeta\ShopByBrand\Model\Brand\DataProvider" name="brand_form_data_source">
+            <settings>
+                <requestFieldName>id</requestFieldName>
+                <primaryFieldName>id</primaryFieldName>
+            </settings>
+        </dataProvider>
+    </dataSource>
+
+    <!-- General Information Fieldset -->
+    <fieldset name="general">
+        <settings>
+            <label translate="true">General Information</label>
+        </settings>
+
+        <!-- Hidden ID Field -->
+        <field name="id" formElement="input">
+            <settings>
+                <dataType>text</dataType>
+                <visible>false</visible>
+                <dataScope>id</dataScope>
+            </settings>
+        </field>
+
+        <!-- Hidden Option ID Field -->
+        <field name="option_id" formElement="input">
+            <settings>
+                <dataType>text</dataType>
+                <visible>false</visible>
+                <dataScope>option_id</dataScope>
+            </settings>
+        </field>
+
+        <!-- Brand Name -->
+        <field name="name" sortOrder="10" formElement="input">
+            <settings>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+                <dataType>text</dataType>
+                <label translate="true">Brand Name</label>
+                <dataScope>name</dataScope>
+            </settings>
+        </field>
+
+        <!-- URL Key -->
+        <field name="url_key" sortOrder="20" formElement="input">
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">URL Key</label>
+                <dataScope>url_key</dataScope>
+                <notice translate="true">Leave empty to auto-generate from brand name</notice>
+            </settings>
+        </field>
+
+        <!-- Is Active -->
+        <field name="is_active" sortOrder="30" formElement="checkbox">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="default" xsi:type="number">1</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>boolean</dataType>
+                <label translate="true">Enable Brand</label>
+                <dataScope>is_active</dataScope>
+            </settings>
+            <formElements>
+                <checkbox>
+                    <settings>
+                        <valueMap>
+                            <map name="false" xsi:type="number">0</map>
+                            <map name="true" xsi:type="number">1</map>
+                        </valueMap>
+                        <prefer>toggle</prefer>
+                    </settings>
+                </checkbox>
+            </formElements>
+        </field>
+
+        <!-- Position -->
+        <field name="position" sortOrder="40" formElement="input">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="default" xsi:type="number">0</item>
+                </item>
+            </argument>
+            <settings>
+                <validation>
+                    <rule name="validate-number" xsi:type="boolean">true</rule>
+                </validation>
+                <dataType>number</dataType>
+                <label translate="true">Position</label>
+                <dataScope>position</dataScope>
+            </settings>
+        </field>
+    </fieldset>
+
+    <!-- Images Fieldset -->
+    <fieldset name="images" sortOrder="20">
+        <settings>
+            <label translate="true">Images</label>
+            <collapsible>true</collapsible>
+        </settings>
+
+        <!-- Brand Image (Banner) -->
+        <field name="image" sortOrder="10" formElement="imageUploader">
+            <settings>
+                <notice translate="true">Brand banner image for brand page</notice>
+                <label translate="true">Brand Image</label>
+                <componentType>imageUploader</componentType>
+            </settings>
+            <formElements>
+                <imageUploader>
+                    <settings>
+                        <required>false</required>
+                        <uploaderConfig>
+                            <param xsi:type="url" name="url" path="zeta_shopbybrand/brand/upload"/>
+                        </uploaderConfig>
+                        <previewTmpl>Magento_Catalog/image-preview</previewTmpl>
+                        <openDialogTitle>Media Gallery</openDialogTitle>
+                        <allowedExtensions>jpg jpeg gif png</allowedExtensions>
+                        <maxFileSize>4194304</maxFileSize>
+                    </settings>
+                </imageUploader>
+            </formElements>
+        </field>
+
+        <!-- Brand Logo -->
+        <field name="logo" sortOrder="20" formElement="imageUploader">
+            <settings>
+                <notice translate="true">Brand logo displayed on product listings and product pages</notice>
+                <label translate="true">Brand Logo</label>
+                <componentType>imageUploader</componentType>
+            </settings>
+            <formElements>
+                <imageUploader>
+                    <settings>
+                        <required>false</required>
+                        <uploaderConfig>
+                            <param xsi:type="url" name="url" path="zeta_shopbybrand/brand/uploadLogo"/>
+                        </uploaderConfig>
+                        <previewTmpl>Magento_Catalog/image-preview</previewTmpl>
+                        <openDialogTitle>Media Gallery</openDialogTitle>
+                        <allowedExtensions>jpg jpeg gif png</allowedExtensions>
+                        <maxFileSize>4194304</maxFileSize>
+                    </settings>
+                </imageUploader>
+            </formElements>
+        </field>
+        
+    </fieldset>
+
+    <!-- Content Fieldset -->
+    <fieldset name="content" sortOrder="30">
+        <settings>
+            <label translate="true">Content</label>
+            <collapsible>true</collapsible>
+        </settings>
+
+        <!-- Short Description -->
+        <field name="short_description" sortOrder="10" formElement="textarea">
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Short Description</label>
+                <dataScope>short_description</dataScope>
+            </settings>
+            <formElements>
+                <textarea>
+                    <settings>
+                        <rows>5</rows>
+                    </settings>
+                </textarea>
+            </formElements>
+        </field>
+
+        <!-- Description -->
+        <field name="description" sortOrder="20" formElement="wysiwyg">
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Description</label>
+                <dataScope>description</dataScope>
+            </settings>
+            <formElements>
+                <wysiwyg>
+                    <settings>
+                        <wysiwyg>true</wysiwyg>
+                    </settings>
+                </wysiwyg>
+            </formElements>
+        </field>
+    </fieldset>
+
+    <!-- SEO Fieldset -->
+    <fieldset name="search_engine_optimization" sortOrder="40">
+        <settings>
+            <label translate="true">Search Engine Optimization</label>
+            <collapsible>true</collapsible>
+        </settings>
+
+        <!-- Meta Title -->
+        <field name="meta_title" sortOrder="10" formElement="input">
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Meta Title</label>
+                <dataScope>meta_title</dataScope>
+            </settings>
+        </field>
+
+        <!-- Meta Description -->
+        <field name="meta_description" sortOrder="20" formElement="textarea">
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Meta Description</label>
+                <dataScope>meta_description</dataScope>
+            </settings>
+            <formElements>
+                <textarea>
+                    <settings>
+                        <rows>4</rows>
+                    </settings>
+                </textarea>
+            </formElements>
+        </field>
+
+        <!-- Meta Keywords -->
+        <field name="meta_keywords" sortOrder="30" formElement="textarea">
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Meta Keywords</label>
+                <dataScope>meta_keywords</dataScope>
+            </settings>
+            <formElements>
+                <textarea>
+                    <settings>
+                        <rows>3</rows>
+                    </settings>
+                </textarea>
+            </formElements>
+        </field>
+    </fieldset>
+</form>
